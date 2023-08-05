@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, StatusBar } from "react-native";
 import { SIZE_IMAGE_CAROUSEL, THEME } from "../util/constants";
 import { GlobalStyle } from "../util/stylesGlobal";
 import CarouselCard from "../components/CarouselCard";
-import CircleIconHeader from "../components/CircleIconHeader";
+import CircleIcon from "../components/CircleIcon";
 import LayoutHeader from "../components/LayoutHeader";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -18,14 +18,14 @@ export default function HomeScreen() {
       <StatusBar barStyle="dark-content" backgroundColor={THEME.primary} />
       <LayoutHeader>
         <View style={GlobalStyle.wrapIcon}>
-          <CircleIconHeader nameIcon="menu" />
+          <CircleIcon nameIcon="menu" />
         </View>
         <View style={GlobalStyle.wrapIcon}>
-          <CircleIconHeader
+          <CircleIcon
             nameIcon="search"
             onPress={() => navigation.navigate("SearchScreen")}
           />
-          <CircleIconHeader nameIcon="notifications-outline" />
+          <CircleIcon nameIcon="notifications-outline" />
         </View>
       </LayoutHeader>
       <Text style={styles.title}>Breaking News</Text>

@@ -9,7 +9,7 @@ type Prop = {
   //route: keyof RootStackParamsList;
 };
 
-export default function CircleIconHeader({ nameIcon, onPress }: Prop) {
+export default function CircleIcon({ nameIcon, onPress }: Prop) {
   return (
     <TouchableOpacity
       style={styles.container}
