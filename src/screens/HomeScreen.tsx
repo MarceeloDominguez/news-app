@@ -1,11 +1,34 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, StatusBar } from "react-native";
+import { SIZE_IMAGE_CAROUSEL, THEME } from "../util/constants";
+import { GlobalStyle } from "../util/stylesGlobal";
 import CarouselCard from "../components/CarouselCard";
-import { SIZE_IMAGE_CAROUSEL } from "../util/constants";
+import CircleIconHeader from "../components/CircleIconHeader";
+import LayoutHeader from "../components/LayoutHeader";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamsList } from "../navigation/Navigation";
 
 export default function HomeScreen() {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamsList>>();
+
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor={THEME.primary} />
+      <LayoutHeader>
+        <View style={GlobalStyle.wrapIcon}>
+          <CircleIconHeader nameIcon="menu" />
+        </View>
+        <View style={GlobalStyle.wrapIcon}>
+          <CircleIconHeader
+            nameIcon="search"
+            onPress={() => navigation.navigate("SearchScreen")}
+          />
+          <CircleIconHeader nameIcon="notifications-outline" />
+        </View>
+      </LayoutHeader>
+      <Text style={styles.title}>Breaking News</Text>
       <FlatList
         data={[{ key: "left-spacer" }, ...Array(10), { key: "left-spacer" }]}
         keyExtractor={(_, index) => index.toString()}
@@ -14,14 +37,10 @@ export default function HomeScreen() {
         pagingEnabled
         snapToInterval={SIZE_IMAGE_CAROUSEL.CONTAINER_ITEM_SIZE}
         contentContainerStyle={{
-          backgroundColor: "red",
           height: 240,
-          marginTop: 30,
           alignItems: "center",
         }}
         renderItem={({ item }) => {
-          console.log(item);
-
           if (item) {
             return (
               <View style={{ width: SIZE_IMAGE_CAROUSEL.SPACER_ITEM_SIZE }} />
@@ -38,5 +57,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: THEME.primary,
+  },
+  title: {
+    paddingHorizontal: 22,
+    fontSize: 20,
+    fontWeight: "600",
+    marginVertical: 5,
   },
 });
