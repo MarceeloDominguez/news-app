@@ -3,8 +3,16 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamsList } from "../navigation/Navigation";
+import { Article } from "../interfaces/newsInterface";
+import { formatDate } from "../helpers/formatDate";
 
-export default function CardNews() {
+type Prop = {
+  article: Article;
+};
+
+export default function CardNews({ article }: Prop) {
+  const { title, author, urlToImage, publishedAt } = article;
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamsList>>();
 
@@ -12,26 +20,27 @@ export default function CardNews() {
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
-      onPress={() => navigation.navigate("DetailsScreen")}
+      onPress={() => navigation.navigate("DetailsScreen", article)}
     >
-      <Image
-        source={{
-          uri: "https://s.yimg.com/ny/api/res/1.2/02Zb8Wu4xtDfqcpEdaoDqg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://media.zenfs.com/en/bloomberg_markets_842/af1be289d4eef43f85063d45e69c6598",
-        }}
-        style={styles.image}
-      />
+      {urlToImage ? (
+        <Image source={{ uri: urlToImage }} style={styles.image} />
+      ) : (
+        <Image
+          source={{
+            uri: "https://s.yimg.com/ny/api/res/1.2/02Zb8Wu4xtDfqcpEdaoDqg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://media.zenfs.com/en/bloomberg_markets_842/af1be289d4eef43f85063d45e69c6598",
+          }}
+          style={styles.image}
+        />
+      )}
+
       <View style={styles.wrapInfoCard}>
         <Text style={styles.author} numberOfLines={1}>
-          Isabelle Khurshudyan, David L. Stern Isabelle Khurshudyan, David L.
-          Stern
+          {author}
         </Text>
         <Text style={styles.title} numberOfLines={2}>
-          The strike on Novorossiysk, a port on the Black Sea about 90 miles
-          west of the city of Krasnodar, demonstrated Ukraine's success in
-          hitting targets in Russian territory. The strike on Novorossiysk, a
-          port on the Black Sea about 90 miles west of the city of Krasnodar,
+          {title}
         </Text>
-        <Text style={styles.date}>6/8/2023</Text>
+        <Text style={styles.date}>{formatDate(new Date(publishedAt))}</Text>
       </View>
     </TouchableOpacity>
   );

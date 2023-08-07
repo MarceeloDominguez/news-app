@@ -1,15 +1,31 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Linking,
+} from "react-native";
 import { SIZE_IMAGE_CAROUSEL, THEME } from "../util/constants";
 import LayoutHeader from "../components/LayoutHeader";
 import CircleIcon from "../components/CircleIcon";
 import { GlobalStyle } from "../util/stylesGlobal";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParamsList } from "../navigation/Navigation";
-import { EvilIcons } from "@expo/vector-icons";
+import { formatDate } from "../helpers/formatDate";
 
-export default function DetailsScreen() {
+interface Prop
+  extends NativeStackScreenProps<RootStackParamsList, "DetailsScreen"> {}
+
+export default function DetailsScreen({ route }: Prop) {
+  const { title, publishedAt, urlToImage, author, description, source, url } =
+    route.params;
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamsList>>();
 
@@ -29,30 +45,25 @@ export default function DetailsScreen() {
           </View>
         </LayoutHeader>
         <View style={styles.contentInfo}>
-          <Text style={styles.portal}>The Washington Post - 28/6/2023</Text>
-          <Text style={styles.title}>
-            Ukraine strikes Russian ports in Novorossiysk and occupied Crimea -
-            The Washington Post - The Washington Post
+          <Text style={styles.portal}>
+            {source?.name ? source.name : "The Washington Post"} -{" "}
+            {formatDate(new Date(publishedAt))}
           </Text>
-          <Image
-            source={{
-              uri: "https://s.yimg.com/ny/api/res/1.2/02Zb8Wu4xtDfqcpEdaoDqg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://media.zenfs.com/en/bloomberg_markets_842/af1be289d4eef43f85063d45e69c6598",
-            }}
-            style={styles.image}
-          />
+          <Text style={styles.title}>{title}</Text>
+          {urlToImage ? (
+            <Image source={{ uri: urlToImage }} style={styles.image} />
+          ) : (
+            <Image
+              source={{
+                uri: "https://s.yimg.com/ny/api/res/1.2/02Zb8Wu4xtDfqcpEdaoDqg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://media.zenfs.com/en/bloomberg_markets_842/af1be289d4eef43f85063d45e69c6598",
+              }}
+              style={styles.image}
+            />
+          )}
           <Text style={styles.author} numberOfLines={2}>
-            Isabelle Khurshudyan, David L. Stern
+            {author}
           </Text>
-          <Text style={styles.description}>
-            The strike on Novorossiysk, a port on the Black Sea about 90 miles
-            west of the city of Krasnodar, demonstrated Ukraine's success in
-            hitting targets in Russian territory. The strike on Novorossiysk, a
-            port on the Black Sea about 90 miles west of the city of Krasnodar,
-            demonstrated Ukraine's success in hitting targets in Russian hitting
-            targets in Russian territory. The strike on Novorossiysk, a port on
-            the Black Sea about 90 miles west of the city of Krasnodar,
-            demonstrated Ukraine's success in hitting targets in Russian
-          </Text>
+          <Text style={styles.description}>{description}</Text>
         </View>
       </ScrollView>
       <View style={styles.buttonFloating}>
@@ -65,7 +76,12 @@ export default function DetailsScreen() {
           <Text style={styles.numberButtonFloating}>12k</Text>
         </View>
         <View style={styles.containerIconLink}>
-          <EvilIcons name="external-link" size={26} color="#fff" />
+          <CircleIcon
+            nameIcon="ios-exit-outline"
+            backgroundColor="#146C94"
+            color="#fff"
+            onPress={() => Linking.openURL(url)}
+          />
         </View>
       </View>
     </>
@@ -135,7 +151,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   containerIconLink: {
-    backgroundColor: "#146C94",
+    //backgroundColor: "#146C94",
     height: 40,
     width: 40,
     borderRadius: 20,

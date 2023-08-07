@@ -4,10 +4,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import DetailsScreen from "../screens/DetailsScreen";
 import SearchScreen from "../screens/SearchScreen";
+import { Article } from "../interfaces/newsInterface";
 
 export type RootStackParamsList = {
   HomeScreen: undefined;
-  DetailsScreen: undefined;
+  DetailsScreen: Article;
   SearchScreen: undefined;
 };
 

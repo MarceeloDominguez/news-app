@@ -5,26 +5,36 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamsList } from "../navigation/Navigation";
+import { Article } from "../interfaces/newsInterface";
 
-export default function CarouselCard() {
+type Prop = {
+  article: Article;
+};
+
+export default function CarouselCard({ article }: Prop) {
+  const { urlToImage, title } = article;
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamsList>>();
 
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate("DetailsScreen")}
+      onPress={() => navigation.navigate("DetailsScreen", article)}
       activeOpacity={1}
     >
-      <Image
-        style={styles.image}
-        source={{
-          uri: "https://s.yimg.com/ny/api/res/1.2/02Zb8Wu4xtDfqcpEdaoDqg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://media.zenfs.com/en/bloomberg_markets_842/af1be289d4eef43f85063d45e69c6598",
-        }}
-      />
+      {urlToImage ? (
+        <Image style={styles.image} source={{ uri: urlToImage }} />
+      ) : (
+        <Image
+          style={styles.image}
+          source={{
+            uri: "https://s.yimg.com/ny/api/res/1.2/02Zb8Wu4xtDfqcpEdaoDqg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://media.zenfs.com/en/bloomberg_markets_842/af1be289d4eef43f85063d45e69c6598",
+          }}
+        />
+      )}
       <Text style={styles.title} numberOfLines={3}>
-        Ukraine strikes Russian ports in Novorossiysk and occupied Crimea - The
-        Washington Post - The Washington Post
+        {title}
       </Text>
       <LinearGradient
         start={{ x: 1, y: 0 }}

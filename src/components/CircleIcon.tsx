@@ -6,17 +6,23 @@ import { THEME } from "../util/constants";
 type Prop = {
   nameIcon: keyof typeof Ionicons.glyphMap;
   onPress?: () => void;
-  //route: keyof RootStackParamsList;
+  backgroundColor?: string;
+  color?: string;
 };
 
-export default function CircleIcon({ nameIcon, onPress }: Prop) {
+export default function CircleIcon({
+  nameIcon,
+  onPress,
+  backgroundColor = THEME.primary,
+  color = "#000",
+}: Prop) {
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={[styles.container, { backgroundColor }]}
       activeOpacity={0.8}
       onPress={onPress}
     >
-      <Ionicons name={nameIcon} size={20} color="#000" />
+      <Ionicons name={nameIcon} size={20} color={color} />
     </TouchableOpacity>
   );
 }
@@ -25,7 +31,6 @@ const styles = StyleSheet.create({
   container: {
     width: 40,
     height: 40,
-    backgroundColor: THEME.primary,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
