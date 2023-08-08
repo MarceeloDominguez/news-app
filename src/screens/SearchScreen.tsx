@@ -50,6 +50,7 @@ export default function SearchScreen() {
           style={styles.button}
           activeOpacity={0.8}
           onPress={() => searchNews()}
+          testID="button-search"
         >
           <Ionicons name="search" size={24} color="black" />
         </TouchableOpacity>

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  Linking,
-} from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { SIZE_IMAGE_CAROUSEL, THEME } from "../util/constants";
 import LayoutHeader from "../components/LayoutHeader";
 import CircleIcon from "../components/CircleIcon";
@@ -18,6 +11,7 @@ import {
 } from "@react-navigation/native-stack";
 import { RootStackParamsList } from "../navigation/Navigation";
 import { formatDate } from "../helpers/formatDate";
+import LinkOpenUrl from "../components/LinkOpenUrl";
 
 interface Prop
   extends NativeStackScreenProps<RootStackParamsList, "DetailsScreen"> {}
@@ -75,14 +69,7 @@ export default function DetailsScreen({ route }: Prop) {
           <CircleIcon nameIcon="ios-chatbox-ellipses-outline" />
           <Text style={styles.numberButtonFloating}>12k</Text>
         </View>
-        <View style={styles.containerIconLink}>
-          <CircleIcon
-            nameIcon="ios-exit-outline"
-            backgroundColor="#146C94"
-            color="#fff"
-            onPress={() => Linking.openURL(url)}
-          />
-        </View>
+        <LinkOpenUrl url={url} />
       </View>
     </>
   );
@@ -149,14 +136,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-  },
-  containerIconLink: {
-    //backgroundColor: "#146C94",
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
   numberButtonFloating: {
     fontWeight: "bold",

@@ -8,6 +8,7 @@ type Prop = {
   onPress?: () => void;
   backgroundColor?: string;
   color?: string;
+  accessibilityLabel?: string;
 };
 
 export default function CircleIcon({
@@ -15,9 +16,11 @@ export default function CircleIcon({
   onPress,
   backgroundColor = THEME.primary,
   color = "#000",
+  ...props
 }: Prop) {
   return (
     <TouchableOpacity
+      {...props}
       style={[styles.container, { backgroundColor }]}
       activeOpacity={0.8}
       onPress={onPress}
