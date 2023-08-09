@@ -30,6 +30,12 @@ Install dependencies
   npm install
 ```
 
+Generate your api key in [https://newsapi.org](https://newsapi.org/)
+ 
+ ```bash
+   modify the file in src/util/apikey.ts 
+ ```
+
 Start the server
 
 ```bash
